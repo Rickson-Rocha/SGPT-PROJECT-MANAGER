@@ -6,5 +6,5 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record ResponseProject(Long id, String name, String description, Status status) {
+public record ResponseProject(Long id, String name, String description, Status status,LocalDate startDate, LocalDate endDate) {
 }
