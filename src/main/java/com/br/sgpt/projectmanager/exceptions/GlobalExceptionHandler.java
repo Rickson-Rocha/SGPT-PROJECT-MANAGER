@@ -1,5 +1,7 @@
 package com.br.sgpt.projectmanager.exceptions;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
@@ -26,6 +29,22 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ProblemDetail handleConstraintViolationException(ConstraintViolationException ex) {
+
+        List<String> errorMessages = ex.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
+
+        String detail = String.join(", ", errorMessages);
+
+
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, detail);
+        problemDetail.setTitle("Validation Failed");
+
+        return problemDetail;
+    }
 
 
     @Override
@@ -33,7 +52,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             MethodArgumentNotValidException ex,
             org.springframework.http.HttpHeaders headers,
             HttpStatusCode status,
-            org.springframework.web.context.request.WebRequest request) {
+            WebRequest request) {
 
         List<String> errors = ex.getBindingResult().getFieldErrors()
                 .stream()
@@ -42,18 +61,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         String detail = String.join(", ", errors);
 
-
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, detail);
         problemDetail.setTitle("Validation Failed");
 
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
-
-
-    private String formatFieldError(FieldError fieldError) {
-        return fieldError.getField() + ": " + fieldError.getDefaultMessage();
-    }
-
-
 }
