@@ -46,11 +46,31 @@ public class ProjectServiceImpl  implements ProjectService {
 
     @Transactional
     public ResponseProject updateProject(Long id, RequestProject data) {
-        return null;
+       Project saveProject = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found with id: " + id));
+       if(data.name()!=null) {
+           saveProject.setName(data.name());
+       }
+       if(data.description()!=null) {
+           saveProject.setDescription(data.description());
+       }
+
+       if(data.status()!=null) {
+           saveProject.setStatus(data.status());
+       }
+       if(data.startDate()!=null) {
+           saveProject.setStartDate(data.startDate());
+       }
+       if(data.endDate()!=null) {
+           saveProject.setEndDate(data.endDate());
+       }
+       return ProjectMapper.toResponse(saveProject);
+
     }
 
     @Override
     public void deleteProject(Long id) {
+        Project saveProject = projectRepository.findById(id).orElseThrow(() -> new ProjectNotFoundException("Project not found with id: " + id));
+        projectRepository.delete(saveProject);
 
     }
 
