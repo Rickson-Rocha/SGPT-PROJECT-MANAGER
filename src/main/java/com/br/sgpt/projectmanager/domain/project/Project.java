@@ -3,20 +3,10 @@ package com.br.sgpt.projectmanager.domain.project;
 
 import com.br.sgpt.projectmanager.domain.project.enums.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.Instant;
+import jakarta.validation.constraints.*;
+import lombok.*;
 import java.time.LocalDate;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "tb_project")
@@ -27,11 +17,11 @@ public class Project {
     private Long id;
 
     @NotBlank(message = "Project name is required")
-    @Size(min = 4, max = 30, message = "The number of characters for the project name must be between 4 and 30")
+    @Size(min = 4, max = 255, message = "The number of characters for the project name must be between 4 and 30")
     private String name;
 
     @NotBlank(message = "Description project is required")
-    @Size(min = 4, max = 30, message = "The number of characters for the project description must be between 4 and 30")
+    @Size(min = 4, max = 255, message = "The number of characters for the project description must be between 4 and 30")
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -39,21 +29,34 @@ public class Project {
     private Status status = Status.NEW;
 
 
-    public Project(Long id, String name, String description, Status status) {
+    @FutureOrPresent(message = "Start date must be today or in the future")
+    @NotNull(message = "End date is required")
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+
+    @Future(message = "End date must be today or in the future")
+    @NotNull(message = "End date is required")
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    public Project(Long id, String name, String description, Status status, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public Project() {
-    }
+    public Project() {}
+
 
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -81,5 +84,19 @@ public class Project {
         this.status = status;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }
