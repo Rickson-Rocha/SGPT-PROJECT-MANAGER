@@ -13,7 +13,7 @@ O **SGPT** é um sistema corporativo projetado para facilitar o gerenciamento de
 1. **Gerenciar projetos e tarefas**: Criar e gerenciar projetos e tarefas com prazos, responsáveis e status.
 2. **Colaboração em tempo real**: Permitir atualizações sincronizadas no progresso das tarefas.
 3. **Integração com mensageria**: Usar RabbitMQ para notificações e atualizações em tempo real.
-5. **Persistência de dados**: Utilizar PostgreSQL ou MySQL para armazenar informações.
+5. **Persistência de dados**: Utilizar PostgreSQL  para armazenar informações.
 6. **Autenticação e controle de acesso**: Implementar permissões para diferentes níveis de usuários.
 
 ---
