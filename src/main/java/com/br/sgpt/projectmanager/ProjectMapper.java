@@ -11,7 +11,9 @@ public class ProjectMapper {
                 null,
                 request.name(),
                 request.description(),
-                Status.NEW
+                Status.NEW,
+                request.startDate(),
+                request.endDate()
         );
     }
 
@@ -20,7 +22,10 @@ public class ProjectMapper {
                 project.getId(),
                 project.getName(),
                 project.getDescription(),
-                project.getStatus()
+                project.getStatus(),
+                project.getStartDate(),
+                project.getEndDate()
+
         );
     }
 }
