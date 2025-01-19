@@ -1,10 +1,9 @@
 package com.br.sgpt.projectmanager.services;
 
-import com.br.sgpt.projectmanager.ProjectMapper;
+import com.br.sgpt.projectmanager.domain.project.mapper.ProjectMapper;
 import com.br.sgpt.projectmanager.domain.project.Project;
 import com.br.sgpt.projectmanager.domain.project.dto.RequestProject;
 import com.br.sgpt.projectmanager.domain.project.dto.ResponseProject;
-import com.br.sgpt.projectmanager.domain.project.enums.Status;
 import com.br.sgpt.projectmanager.exceptions.ProjectNotFoundException;
 import com.br.sgpt.projectmanager.repositories.ProjectRepository;
 import jakarta.transaction.Transactional;
