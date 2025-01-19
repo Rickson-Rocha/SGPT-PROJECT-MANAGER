@@ -2,10 +2,13 @@ package com.br.sgpt.projectmanager.domain.project;
 
 
 import com.br.sgpt.projectmanager.domain.project.enums.Status;
+import com.br.sgpt.projectmanager.domain.task.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -40,6 +43,9 @@ public class Project {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks = new ArrayList<>();
+
     public Project(Long id, String name, String description, Status status, LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.name = name;
@@ -51,7 +57,9 @@ public class Project {
 
     public Project() {}
 
-
+    public List<Task> getTasks() {
+        return tasks;
+    }
     public Long getId() {
         return id;
     }
