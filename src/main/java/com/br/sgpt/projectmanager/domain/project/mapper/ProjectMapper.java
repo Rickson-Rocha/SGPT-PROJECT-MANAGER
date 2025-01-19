@@ -1,4 +1,4 @@
-package com.br.sgpt.projectmanager;
+package com.br.sgpt.projectmanager.domain.project.mapper;
 
 import com.br.sgpt.projectmanager.domain.project.Project;
 import com.br.sgpt.projectmanager.domain.project.dto.RequestProject;
