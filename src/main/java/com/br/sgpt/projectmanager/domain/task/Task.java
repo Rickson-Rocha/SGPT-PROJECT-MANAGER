@@ -5,6 +5,7 @@ import com.br.sgpt.projectmanager.domain.project.Project;
 import com.br.sgpt.projectmanager.domain.project.enums.Status;
 import com.br.sgpt.projectmanager.domain.task.enums.Priority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,11 @@ import java.time.LocalDateTime;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
+
+    @NotBlank
     private String name;
+    @NotBlank
     private String description;
 
     @Column(name = "task_priority")
@@ -34,7 +38,7 @@ public class Task {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    public Task(String id, String name, String description, Priority priority, Status status, LocalDateTime startDate, LocalDateTime endDate, Project project) {
+    public Task(Long id, String name, String description, Priority priority, Status status, LocalDateTime startDate, LocalDateTime endDate, Project project) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -62,11 +66,11 @@ public class Task {
     }
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
