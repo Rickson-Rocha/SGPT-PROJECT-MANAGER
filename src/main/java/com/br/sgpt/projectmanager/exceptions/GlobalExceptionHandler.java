@@ -27,6 +27,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return problemDetail;
     }
 
+    @ExceptionHandler(TaskNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ProblemDetail handleTaskNotFoundException(TaskNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+        return problemDetail;
+    }
     @ExceptionHandler(DateTaskException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ProblemDetail handleDateTaskException(DateTaskException ex) {
