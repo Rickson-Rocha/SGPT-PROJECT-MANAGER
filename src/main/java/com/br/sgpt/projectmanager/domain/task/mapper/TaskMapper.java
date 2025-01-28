@@ -3,6 +3,7 @@ package com.br.sgpt.projectmanager.domain.task.mapper;
 import com.br.sgpt.projectmanager.domain.project.Project;
 import com.br.sgpt.projectmanager.domain.task.Task;
 import com.br.sgpt.projectmanager.domain.task.dto.TaskRequest;
+import com.br.sgpt.projectmanager.domain.task.dto.TaskResponse;
 import com.br.sgpt.projectmanager.exceptions.ProjectNotFoundException;
 import com.br.sgpt.projectmanager.repositories.ProjectRepository;
 import org.springframework.stereotype.Component;
@@ -29,6 +30,19 @@ public class TaskMapper {
                 taskRequest.startDate(),
                 taskRequest.endDate(),
                 project
+        );
+    }
+
+    public TaskResponse toResponse(Task task) {
+        return new TaskResponse(
+                task.getId(),
+                task.getName(),
+                task.getDescription(),
+                task.getPriority(),
+                task.getStatus(),
+                task.getStartDate(),
+                task.getEndDate(),
+                task.getProject()
         );
     }
 }
